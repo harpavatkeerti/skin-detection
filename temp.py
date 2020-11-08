@@ -12,11 +12,6 @@ def skinRange(H,S,V):
 
 def doDiff(img,want_color1,skin_color,size):
     print(skin_color)
-    # skin_color = []
-    # skin_color.append(30)
-    # skin_color.append(30)
-    # skin_color.append(30)
-    # skin_color[2] += 30
     diff01=want_color1[0]/skin_color[0]
     diff02=(255-want_color1[0])/(255-skin_color[0])
     diff03=(255*(want_color1[0]-skin_color[0]))/(255-skin_color[0])
@@ -94,14 +89,13 @@ def change_skin(image_file,want_color1,output_path):
     # Define the upper and lower boundaries of the HSV pixel
     # intensities to be considered 'skin'
     (faceBool,skin_color)=get_skin_color(img)
-    if(skin_color[0]==0 and skin_color[1]==0 and skin_color[2]==0):
+    if(skin_color[0]==0 and skin_color[0]==0 and skin_color[0]==0):
     	lower=np.array([0, 58,50], dtype = "uint8")
     	upper=np.array([25, 173,255], dtype = "uint8")
     	skinMask=cv2.inRange(converted, lower, upper)
     	tmpImage=cv2.bitwise_and(img,img,mask=skinMask)
     	skin_color=new_skin_color(tmpImage)
-    else:
-    # if(skinRange(skin_color[0],skin_color[1],skin_color[2])):
+    if(skinRange(skin_color[0],skin_color[1],skin_color[2])):
     	Hue=10
     	Saturation=65
     	Value=50
@@ -121,7 +115,6 @@ def change_skin(image_file,want_color1,output_path):
 
     skinMaskInv=cv2.bitwise_not(skinMask)
     skin_color = np.uint8([[skin_color]])
-    print("ssss ", skin_color)
     skin_color = cv2.cvtColor(skin_color,cv2.COLOR_HSV2RGB)
     skin_color=skin_color[0][0]
     skin_color=np.int16(skin_color)
@@ -167,12 +160,6 @@ def change_skin(image_file,want_color1,output_path):
     # 				skin[i,j,2]=imgLeft[i,j,2]*0.5+skinOver[i,j,2]*0.5
 
     skin = cv2.add(imgLeft,skinOver)
-    # kernel_sharpening=np.array([[-1,-5,-1], [-5, -1,-1], [-5,-1,-5]])
-    # skin = cv2.filter2D(skin,-1,kernel_sharpening)
-    # cv2.GaussianBlur(skin, im, cv2.Size(0, 0), 3)
-    # cv2.addWeighted(skin, 1.5, im, -0.5, 0, im)
-    # skin = im
-    # cv2.GaussianBlur(skin, (0,0), sigmaX=3, sigmaY=3, borderType = cv2.BORDER_DEFAULT)
 
     # Return the Byte String of the output image.
 
