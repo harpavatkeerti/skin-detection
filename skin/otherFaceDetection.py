@@ -1,7 +1,6 @@
 from sklearn.cluster import KMeans
 import cv2
 import numpy as np
-import utils
 import matplotlib.pyplot as plt
 
 def skin(color):
@@ -28,11 +27,11 @@ def new_skin_color(image_file):
 		# based on the number of pixels assigned to each cluster.
 		numLabels = np.arange(0, len(np.unique(clt.labels_)) + 1)
 		(hist, _) = np.histogram(clt.labels_, bins = numLabels)
-	 
+
 		# Normalize the histogram, such that it sums to one.
 		hist = hist.astype("float")
 		hist /= hist.sum()
-	 
+
 		# Return the histogram.
 		return hist
 
@@ -41,7 +40,7 @@ def new_skin_color(image_file):
 		# Obtain the color with maximum percentage of area covered.
 		maxi=0
 		COLOR=[0,0,0]
-		
+
 		# Loop over the percentage of each cluster and the color of
 		# each cluster.
 		for (percent, color) in zip(hist, centroids):
